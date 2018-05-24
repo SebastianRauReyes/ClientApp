@@ -1,12 +1,13 @@
 package com.clienteapp.exception;
 
-public class LoginException extends Exception{
-	public LoginException(String string) {
+public class EmptyResultException extends Exception{
+	
+	public EmptyResultException(String string) {
 		// TODO Auto-generated constructor stub
 		super(string);
 	}
 
-	public LoginException() {
+	public EmptyResultException() {
 		// TODO Auto-generated constructor stub
 	}
 
