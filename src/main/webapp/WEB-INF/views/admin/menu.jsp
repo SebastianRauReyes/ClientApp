@@ -1,7 +1,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-<title>ClientApp</title>
+<title>Customer App</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -15,24 +15,26 @@
 
 	<div class="container-fluid">
 		<div class="row-fluid">
+		<div class="col-md-3"></div>
 			<div class="col-md-6">
-				<h4 class="text-center">Menu</h4>
+				<h4 class="text-center">Admin Menu</h4>
 				<hr>
 				<table class="table table-bordered table-striped">
 					<tbody>
 						<tr>
 							<td>
 								<a href="<%=request.getContextPath()%>/admin/emp/list"
-								class="btn btn-primary"> Manager Customer</a>
+								class="btn btn-primary btn-block"> Manager Customer</a>
 							</td>
 							<td>
-								<a href="#"
-								class="btn btn-primary">Logout</a>
+								<a href="<%=request.getContextPath()%>"
+								class="btn btn-danger btn-block">Logout</a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+			<div class="col-md-3"></div>
 		</div>
 	</div>
 </body>

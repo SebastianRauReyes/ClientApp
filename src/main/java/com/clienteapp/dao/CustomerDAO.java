@@ -21,7 +21,7 @@ public interface CustomerDAO {
 	
 	Customer findCustomerByLogin(String company_name) throws DAOException, EmptyResultException;
 
-	List<Customer> findAllCustomers() throws DAOException;
+	List<Customer> findAllCustomers() throws DAOException, EmptyResultException;
 
 	List<Customer> findCustomerByName(String contact_name) throws DAOException;
 }

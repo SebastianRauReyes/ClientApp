@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import com.clienteapp.model.Customer;
 import com.clienteapp.services.CustomerService;
-
-
 
 
 @Controller
@@ -32,16 +31,17 @@ public class CustomerController {
 		return "/admin/menu";
 	}
 
-		//-----------------------------------------------------------------------------------------------------------------
-		//-----------------------------------------------------------------------------------------------------------------
-		// LIST
-		//-----------------------------------------------------------------------------------------------------------------
-		//-----------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------
+// CUSTOMER LIST
+//----------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------
+	
 	@GetMapping("/admin/emp/list")
-	public String list(@ModelAttribute("SpringWeb") Customer customer, ModelMap model) {
+	public String list(@ModelAttribute("customer") Customer customer, ModelMap model) {
 
 		try {
-			model.addAttribute("employees", customerService.findAll());
+			model.addAttribute("customers", customerService.findAll());
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			model.addAttribute("message", e.getMessage());
@@ -50,13 +50,13 @@ public class CustomerController {
 		return "admin/emp/list";
 	}
 	
-		//-----------------------------------------------------------------------------------------------------------------
-		//-----------------------------------------------------------------------------------------------------------------
-		// UPDATE
-		//-----------------------------------------------------------------------------------------------------------------
-		//-----------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------
+// CUSTOMER UPDATE
+//----------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------
 	
-	@GetMapping("/admin/emp/{action}/{employee_id}")
+	@GetMapping("/admin/emp/{action}/{customer_id}")
 	public ModelAndView form(@PathVariable String action, @PathVariable int customer_id, ModelMap model) {
 
 		// action = {"editform","deleteform"}
@@ -76,7 +76,7 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/admin/emp/editsave")
-	public ModelAndView editsave(@ModelAttribute("SpringWeb") Customer customer, ModelMap model) {
+	public ModelAndView editsave(@ModelAttribute("customer") Customer customer, ModelMap model) {
 
 		
 		logger.info("Customer = " + customer);
@@ -95,15 +95,16 @@ public class CustomerController {
 
 		return modelAndView;
 	}
-		//-----------------------------------------------------------------------------------------------------------------
-		//-----------------------------------------------------------------------------------------------------------------
-		// CREATE
-		//-----------------------------------------------------------------------------------------------------------------
-		//-----------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------
+// CUSTOMER CREATE
+//----------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------	
 	
-	@GetMapping("/admin/emp/createform")
-	public String formCreate() {
-		return "/admin/emp/createform";
+	@GetMapping("/create")
+	public ModelAndView register() {
+		Customer customer = new Customer();
+		return new ModelAndView("/admin/emp/createform", "command", customer);
 	}
 	
 	
@@ -116,13 +117,35 @@ public class CustomerController {
 			customerService.create(customer.getCompany_name(), customer.getContact_name(), 
 					customer.getContact_tittle(), customer.getAddress(), customer.getCity());
 
-			modelAndView = new ModelAndView("redirect:/");
+			modelAndView = new ModelAndView("redirect:/admin/emp/list");
 		} catch (Exception e) {
 			model.addAttribute("message", e.getMessage());
-			modelAndView = new ModelAndView("redirect:/");
+			modelAndView = new ModelAndView("redirect:/admin/emp/list");
 		}
 
 		return modelAndView;
+	}
+	
+	
+//----------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------
+// CUSTOMER DELETE
+//----------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	@GetMapping("/admin/emp/delete/{customer_id}")
+	public String  delete(@ModelAttribute("customer") Customer cus,@PathVariable int customer_id, BindingResult result, ModelMap model) {
+
+			try {
+				customerService.delete(customer_id);
+			
+			} catch (Exception e) {
+				// model.addAttribute("message", e.getMessage());
+				// modelAndView = new ModelAndView("redirect:/admin/emp/list");
+			}
+		
+		return "redirect:/admin/emp/list";
 	}
 	
 	

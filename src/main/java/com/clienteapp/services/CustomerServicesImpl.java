@@ -26,7 +26,7 @@ public class CustomerServicesImpl implements CustomerService {
 	}
 
 	@Override
-	public List<Customer> findAll() throws DAOException {
+	public List<Customer> findAll() throws DAOException, EmptyResultException {
 		
 		List<Customer> cus = customerDAO.findAllCustomers();
 		return cus;

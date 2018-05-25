@@ -14,6 +14,8 @@ import com.clienteapp.mapper.CustomerMapper;
 import com.clienteapp.model.Customer;
 
 
+
+
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
 	
@@ -51,7 +53,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public void create(String company_name, String contact_name, String contact_tittle, String address, String city)
 			throws DAOException {
 		
-		String query = "INSERT INTO  customers(company_name, contact_name, contact_tittle, address, city)  VALUES ( ?,?,?,?,?,? )";
+		String query = "INSERT INTO  customers(company_name, contact_name, contact_tittle, address, city)  VALUES (?,?,?,?,?)";
 
 		Object[] params = new Object[] { company_name,contact_name, contact_tittle,address, city };
 
@@ -75,14 +77,36 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public void delete(int customer_id) throws DAOException {
-		// TODO Auto-generated method stub
+		
+		String query = "DELETE FROM customers WHERE customer_id = ? ";
+
+		Object[] params = new Object[] { customer_id };
+
+		try {
+			jdbcTemplate.update(query, params);
+		} catch (Exception e) {
+			logger.info("Error: " + e.getMessage());
+			throw new DAOException(e.getMessage());
+		}
 		
 	}
 
 	@Override
 	public void update(int customer_id, String company_name, String contact_name, String contact_tittle, String address,
 			String city) throws DAOException {
-		// TODO Auto-generated method stub
+		
+		String query = "UPDATE customers SET company_name = ?, contact_name =?, contact_tittle = ?, address = ?, city = ? WHERE customer_id = ?";
+
+		Object[] params = new Object[] { company_name, company_name, contact_tittle, address, city, customer_id};
+
+		try {
+			jdbcTemplate.update(query, params);
+		} catch (Exception e) {
+			logger.info("Error: " + e.getMessage());
+			throw new DAOException(e.getMessage());
+		}
+		
+		
 		
 	}
 
@@ -93,9 +117,23 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public List<Customer> findAllCustomers() throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Customer> findAllCustomers() throws DAOException, EmptyResultException {
+		
+		String query = "SELECT customer_id, company_name, contact_name, contact_tittle, address, city FROM customers";
+
+		try {
+
+			List<Customer> customers = jdbcTemplate.query(query, new CustomerMapper());
+			//
+			return customers;
+
+		} catch (EmptyResultDataAccessException e) {
+			throw new EmptyResultException();
+		} catch (Exception e) {
+			logger.info("Error: " + e.getMessage());
+			throw new DAOException(e.getMessage());
+		}
+		
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-<title>Spring MVC CRUD</title>
+<title>Customer App</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -14,12 +14,13 @@
 <body>
 	<div class="container-fluid">
 		<div class="row-fluid">
+		<div class="col-md-4"></div>
 			<div class="col-md-4">
-				<h4 class="text-center">User Login</h4>
+				<h4 class="text-center">Admin Login</h4>
 				<hr>
 				<form:form method="post" action="login">
 					<div class="form-group">
-						<label for="admin_id">Login: </label>
+						<label for="admin_id">Admin ID: </label>
 						<form:input path="admin_id" class="form-control" />
 					</div>
 					<div class="form-group">
@@ -27,11 +28,12 @@
 						<form:password path="password_admin" class="form-control" />
 					</div>
 					<div class="form-group">
-						<input type="submit" value="Login" class="btn btn-success" />
+						<input type="submit" value="Login" class="btn btn-success btn-block" />
 					</div>
 				</form:form>
 				<font color="red">${message}</font>
 			</div>
+			<div class="col-md-4"></div>
 		</div>
 	</div>
 </body>

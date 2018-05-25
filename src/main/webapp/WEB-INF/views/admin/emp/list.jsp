@@ -2,7 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<title>Spring MVC CRUD</title>
+<title>Customer App</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -16,8 +16,9 @@
 
 	<div class="container-fluid">
 		<div class="row-fluid">
+		<div class="col-md-2"></div>
 			<div class="col-md-8">
-				<h4 class="text-center">Customer</h4>
+				<h4 class="text-center">Customer List</h4>
 				<hr>
 				<table class="table table-bordered table-striped">
 					<thead>
@@ -34,7 +35,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="cus" items="${customer}">
+						<c:forEach var="cus" items="${customers}">
 							<tr>
 								<td>${cus.customer_id}</td>
 								<td>${cus.company_name}</td>
@@ -57,7 +58,7 @@
 										class="glyphicon glyphicon-check"></i>Edit
 								</a></td>
 								<td><a
-									href="<%=request.getContextPath()%>/admin/emp/deleteform/${cus.customer_id}"
+									href="<%=request.getContextPath()%>/admin/emp/delete/${cus.customer_id}"
 									class="btn btn-danger btn-xs"> <i
 										class="glyphicon glyphicon-trash"></i> Delete
 								</a></td>
@@ -65,13 +66,14 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<br /> <a href="<%=request.getContextPath()%>/admin/emp/createform"
+				<br /> <a href="<%=request.getContextPath()%>/create"
 					class="btn btn-success"><i class="glyphicon glyphicon-edit"></i>
 					Create Customer</a>
 					<a href="<%=request.getContextPath()%>/admin/menu"
 					class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i>
 					Menu</a>
 			</div>
+			<div class="col-md-2"></div>
 			<font color="red">${message}</font>
 		</div>
 	</div>
